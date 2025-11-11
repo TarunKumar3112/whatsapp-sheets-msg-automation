@@ -1,0 +1,232 @@
+/* =========================================
+   GLOBAL STYLE
+========================================= */
+body {
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(120deg, #fbc2eb, #a6c1ee);
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
+
+h1, h2, h3, p {
+  margin: 0;
+  padding: 0;
+}
+
+/* =========================================
+   LOGIN PAGE
+========================================= */
+.login-container {
+  background: white;
+  border-radius: 15px;
+  padding: 40px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  width: 350px;
+  text-align: center;
+  margin: 120px auto;
+  transition: all 0.3s ease;
+}
+
+.login-container h2 {
+  margin-bottom: 20px;
+  color: #4a90e2;
+}
+
+.login-container input {
+  display: block;
+  width: 80%;
+  margin: 10px auto;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.login-container input:focus {
+  border-color: #4a90e2;
+}
+
+.login-container button {
+  background: #4a90e2;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-weight: 600;
+  margin-top: 10px;
+  transition: 0.3s;
+}
+
+.login-container button:hover {
+  background: #357ABD;
+}
+
+.error {
+  color: red;
+  margin-top: 10px;
+  font-weight: 500;
+}
+
+/* =========================================
+   NAVBAR
+========================================= */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  background: white;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.navbar h1 {
+  color: #4a90e2;
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.navbar button {
+  background: #ff4757;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+  font-weight: 500;
+}
+
+.navbar button:hover {
+  background: #e84118;
+}
+
+/* =========================================
+   DASHBOARD PAGE
+========================================= */
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
+  color: #333;
+}
+
+.dashboard-content {
+  background: white;
+  border-radius: 15px;
+  padding: 40px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  width: 80%;
+  max-width: 700px;
+  margin-top: 50px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.dashboard-content h2 {
+  color: #4a90e2;
+  margin-bottom: 10px;
+}
+
+.dashboard-content p {
+  margin-bottom: 20px;
+  color: #555;
+}
+
+/* =========================================
+   BUTTONS
+========================================= */
+.send-btn {
+  background: #28a745;
+  border: none;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.send-btn:hover {
+  background: #218838;
+}
+
+.send-btn:disabled {
+  background: #94d3a2;
+  cursor: not-allowed;
+}
+
+/* =========================================
+   LOG BOX (Live WhatsApp Logs)
+========================================= */
+.log-box {
+  background: #f8f9fa;
+  border-radius: 10px;
+  margin-top: 25px;
+  padding: 15px;
+  text-align: left;
+  height: 260px;
+  overflow-y: auto;
+  font-family: monospace;
+  white-space: pre-wrap;
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
+  font-size: 14px;
+}
+
+/* Scrollbar style */
+.log-box::-webkit-scrollbar {
+  width: 8px;
+}
+
+.log-box::-webkit-scrollbar-thumb {
+  background: #bbb;
+  border-radius: 8px;
+}
+
+/* =========================================
+   LOG COLORS (optional pretty look)
+========================================= */
+.log-box p {
+  margin: 3px 0;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.log-box p:has(> .success),
+.log-box p:has(> .green) {
+  color: #1e7e34;
+}
+
+.log-box p:has(> .error),
+.log-box p:has(> .red) {
+  color: #c82333;
+}
+
+.log-box p:has(> .warn),
+.log-box p:has(> .yellow) {
+  color: #ff9800;
+}
+
+.muted {
+  color: #888;
+  text-align: center;
+  margin-top: 15px;
+}
+
+/* =========================================
+   FOOTER (optional)
+========================================= */
+footer {
+  margin-top: 40px;
+  text-align: center;
+  font-size: 13px;
+  color: #666;
+}
+

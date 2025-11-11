@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Kindergarten Daily Report Sender</title>
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, #fef6e4, #e3f2fd);
+      text-align: center;
+      padding: 60px 20px;
+      color: #333;
+    }
+
+    h1 {
+      color: #ff6f61;
+      font-size: 28px;
+      margin-bottom: 5px;
+    }
+
+    p.subtitle {
+      color: #555;
+      margin-bottom: 30px;
+      font-size: 16px;
+    }
+
+    button {
+      background: #25D366;
+      color: white;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    button:hover {
+      background: #1da851;
+      transform: scale(1.05);
+    }
+
+    #status {
+      margin-top: 30px;
+      font-size: 15px;
+      color: #444;
+      text-align: left;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      display: none;
+    }
+
+    .sent {
+      color: #2e7d32;
+    }
+
+    .error {
+      color: #d32f2f;
+    }
+
+    footer {
+      margin-top: 50px;
+      font-size: 13px;
+      color: #777;
+    }
+  </style>
+</head>
+<body>
+  <h1>📢 Kindergarten Daily Report Sender</h1>
+  <p class="subtitle">Send today’s WhatsApp updates to all parents — directly from Google Sheets 💬</p>
+
+  <button id="sendBtn" onclick="sendMessages()">🚀 Send WhatsApp Messages</button>
+
+  <div id="status"></div>
+
+  <footer>© 2025 Little Learners | Powered by Twilio + Google Sheets</footer>
+
+  <script>
+    async function sendMessages() {
+      const statusBox = document.getElementById('status');
+      statusBox.style.display = 'block';
+      statusBox.innerHTML = "⏳ Sending messages...<br>";
+
+      try {
+        const res = await fetch('/send', { method: 'POST' });
+        const text = await res.text();
+
+        if (res.ok) {
+          statusBox.innerHTML += `<p class="sent">✅ ${text}</p>`;
+        } else {
+          statusBox.innerHTML += `<p class="error">❌ ${text}</p>`;
+        }
+      } catch (err) {
+        statusBox.innerHTML += `<p class="error">⚠️ Error: ${err.message}</p>`;
+      }
+    }
+  </script>
+</body>
+</html>

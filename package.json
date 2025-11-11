@@ -1,0 +1,28 @@
+{
+  "name": "whatsapp-sheets",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "googleapis": "^164.1.0",
+    "twilio": "^5.10.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TarunKumar3112/Whatsapp-sheets.git"
+  },
+  "bugs": {
+    "url": "https://github.com/TarunKumar3112/Whatsapp-sheets/issues"
+  },
+  "homepage": "https://github.com/TarunKumar3112/Whatsapp-sheets#readme"
+}
