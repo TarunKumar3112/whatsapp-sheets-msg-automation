@@ -230,3 +230,72 @@ footer {
   color: #666;
 }
 
+/* Buttons section */
+.button-section {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.send-btn {
+  background: #28a745;
+  border: none;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.send-btn:hover {
+  background: #218838;
+}
+
+.send-btn:disabled {
+  background: #94d3a2;
+  cursor: not-allowed;
+}
+
+.clear-btn {
+  background: #f39c12;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.clear-btn:hover {
+  background: #e67e22;
+}
+
+/* Log box */
+.log-box {
+  background: #f8f9fa;
+  border-radius: 10px;
+  margin-top: 25px;
+  padding: 15px;
+  text-align: left;
+  height: 260px;
+  overflow-y: auto;
+  font-family: monospace;
+  white-space: pre-wrap;
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
+  font-size: 14px;
+}
+
+.log-box p {
+  margin: 3px 0;
+}
+
+.green { color: #1e7e34; }
+.red { color: #c82333; }
+.yellow { color: #ff9800; }
+.muted { color: #888; text-align: center; margin-top: 15px; }
+

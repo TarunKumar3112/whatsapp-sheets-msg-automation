@@ -31,23 +31,19 @@ const auth = new google.auth.GoogleAuth({
 const sheets = google.sheets({ version: "v4", auth });
 
 // =======================================================
-// ROUTE: SEND WHATSAPP MESSAGES (STREAMING LOGS)
+// ROUTE: SEND DAILY REPORTS
 // =======================================================
 app.get("/send", async (req, res) => {
   res.setHeader("Content-Type", "text/event-stream");
   res.setHeader("Cache-Control", "no-cache");
   res.setHeader("Connection", "keep-alive");
 
-  // helper function to send SSE messages
-  const sendLog = (msg) => {
-    res.write(`data: ${msg}\n\n`);
-  };
+  const sendLog = (msg) => res.write(`data: ${msg}\n\n`);
 
   try {
     sendLog("📊 Fetching data from Google Sheet...");
     const sheetId = process.env.SHEET_ID;
     const range = "Sheet1!A2:H";
-
     const result = await sheets.spreadsheets.values.get({
       spreadsheetId: sheetId,
       range,
@@ -72,16 +68,22 @@ app.get("/send", async (req, res) => {
       const messageBody =
         messageFromSheet ||
         `
+🌞 Good evening, dear parent!
+
+Here’s today’s daily report for your little one 🧸💕
+
 👧 Student: ${studentName || "Unknown"}
 🍽 Appetite: ${appetite || "N/A"}
 💤 Sleeping: ${sleeping || "N/A"}
 😊 Behaviour: ${behaviour || "N/A"}
 🎭 Mood: ${mood || "N/A"}
 📝 Note: ${note || "No note provided."}
+
+Your child had a wonderful day at school today! 💖
+- The Kindergarten Team 🏫✨
         `;
 
       sendLog(`➡️ Sending message to ${phone} (${studentName || "Unknown"})...`);
-
       try {
         await client.messages.create({
           from: process.env.TWILIO_WHATSAPP_FROM,
@@ -94,7 +96,7 @@ app.get("/send", async (req, res) => {
       }
     }
 
-    sendLog("🎉 All messages processed successfully!");
+    sendLog("🎉 All daily reports sent successfully!");
     sendLog("[DONE]");
     res.end();
   } catch (error) {
@@ -104,9 +106,75 @@ app.get("/send", async (req, res) => {
   }
 });
 
+// =======================================================
+// ROUTE: SEND WEEKLY MENU (ONE MESSAGE TO ALL PARENTS)
+// =======================================================
+app.get("/send-menu", async (req, res) => {
+  res.setHeader("Content-Type", "text/event-stream");
+  res.setHeader("Cache-Control", "no-cache");
+  res.setHeader("Connection", "keep-alive");
+
+  const sendLog = (msg) => res.write(`data: ${msg}\n\n`);
+
+  try {
+    sendLog("🍱 Fetching weekly food menu from Google Sheet...");
+
+    const sheetId = process.env.SHEET_ID;
+    const range = "WeeklyMenu!A2:C";
+    const result = await sheets.spreadsheets.values.get({
+      spreadsheetId: sheetId,
+      range,
+    });
+
+    const rows = result.data.values;
+
+    if (!rows || rows.length === 0) {
+      sendLog("⚠️ No data found in WeeklyMenu sheet.");
+      return res.end();
+    }
+
+    // Prepare the table of day + food
+    let menuTable = "*🍽 Weekly Food Menu 🍽*\n\n";
+    menuTable += "📅 *Day* — *Menu*\n";
+    menuTable += "──────────────────────\n";
+    for (const row of rows) {
+      const [day, food] = row;
+      menuTable += `• ${day || "N/A"} — ${food || "N/A"}\n`;
+    }
+    menuTable += "\nHave a delicious week ahead! 😋\n- Kindergarten Team 🏫✨";
+
+    // Collect unique phone numbers
+    const phones = [...new Set(rows.map((r) => r[2]).filter(Boolean))];
+
+    sendLog(`✅ Found ${rows.length} menu rows and ${phones.length} unique phone numbers.`);
+
+    for (const phone of phones) {
+      sendLog(`➡️ Sending weekly menu to ${phone}...`);
+      try {
+        await client.messages.create({
+          from: process.env.TWILIO_WHATSAPP_FROM,
+          to: `whatsapp:${phone}`,
+          body: menuTable,
+        });
+        sendLog(`✅ Menu message sent successfully to ${phone}`);
+      } catch (err) {
+        sendLog(`❌ Failed to send to ${phone}: ${err.message}`);
+      }
+    }
+
+    sendLog("🎉 Weekly menu message sent to all parents successfully!");
+    sendLog("[DONE]");
+    res.end();
+  } catch (error) {
+    sendLog(`❌ Error in /send-menu: ${error.message}`);
+    sendLog("[DONE]");
+    res.end();
+  }
+});
+
 
 // =======================================================
-// SERVE FRONTEND (SAFE FOR NODE 22+)
+// SERVE FRONTEND (OPTIONAL BUILD SUPPORT)
 // =======================================================
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
