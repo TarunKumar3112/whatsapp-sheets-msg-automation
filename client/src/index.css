@@ -2,14 +2,90 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  font-family: "Inter", "SF Pro Display", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #f8fafc;
+  background-color: #020617;
+  min-height: 100vh;
+}
+
 body {
-  @apply bg-gradient-to-br from-indigo-500 via-blue-500 to-cyan-400 text-white;
+  margin: 0;
+  background-color: #020617;
+  color: #f8fafc;
 }
 
 .glass {
-  backdrop-filter: blur(20px);
-  background: rgba(255, 255, 255, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  border-radius: 16px;
+  backdrop-filter: blur(30px) saturate(160%);
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 25px 80px rgba(15, 23, 42, 0.45);
+}
+
+.gradient-blob {
+  position: fixed;
+  width: 50rem;
+  height: 50rem;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.45), transparent 60%);
+  filter: blur(80px);
+  opacity: 0.7;
+  z-index: 0;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.grid-pattern {
+  position: fixed;
+  inset: 0;
+  background-image: linear-gradient(transparent 96%, rgba(255, 255, 255, 0.06) 96%),
+    linear-gradient(90deg, transparent 96%, rgba(255, 255, 255, 0.06) 96%);
+  background-size: 32px 32px;
+  mask-image: radial-gradient(circle, rgba(0, 0, 0, 0.6), transparent 70%);
+  z-index: 0;
+}
+
+.btn-modern {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 1.25rem;
+  border: 1px solid transparent;
+  background-image: linear-gradient(90deg, rgba(129, 140, 248, 0.9), rgba(56, 189, 248, 0.95));
+  padding: 0.85rem 1.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: #0f172a;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  box-shadow: 0 10px 30px rgba(59, 130, 246, 0.35);
+}
+
+.btn-modern:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.btn-modern:not(:disabled):hover {
+  transform: scale(1.02);
+}
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.85rem 1.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.8);
+  transition: border-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-ghost:hover {
+  border-color: rgba(255, 255, 255, 0.4);
+  color: #fff;
 }
