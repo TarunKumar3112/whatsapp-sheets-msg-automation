@@ -61,6 +61,26 @@ const Dashboard = () => {
   };
 
   // --------------------------------------------------
+  // FUNCTION: FETCH STUDENT REPORT STATUS (SUPABASE)
+  // --------------------------------------------------
+  const fetchStudentStatus = async () => {
+    setLogs((prev) => [...prev, "📊 Fetching student report status..."]);
+    try {
+      const response = await fetch("http://localhost:3000/student-status");
+      const data = await response.json();
+
+      if (data.message) {
+        setLogs((prev) => [...prev, `✅ Status: ${data.message}`]);
+      } else {
+        setLogs((prev) => [...prev, "⚠️ Received empty status."]);
+      }
+    } catch (error) {
+      console.error("Error fetching status:", error);
+      setLogs((prev) => [...prev, "❌ Error fetching status from server."]);
+    }
+  };
+
+  // --------------------------------------------------
   // FUNCTION: CLEAR LOGS
   // --------------------------------------------------
   const clearLogs = () => {
@@ -100,6 +120,15 @@ const Dashboard = () => {
             disabled={isSending}
           >
             {isSending ? "🍱 Sending Weekly Menu..." : "📆 Send Weekly Menu"}
+          </button>
+
+          <button
+            className="send-btn"
+            style={{ background: "#8b5cf6" }} // Violet color for distinction
+            onClick={fetchStudentStatus}
+            disabled={isSending}
+          >
+            📊 Student Report Status
           </button>
 
           <button className="clear-btn" onClick={clearLogs}>

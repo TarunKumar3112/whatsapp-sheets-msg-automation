@@ -31,6 +31,44 @@ const auth = new google.auth.GoogleAuth({
 const sheets = google.sheets({ version: "v4", auth });
 
 // =======================================================
+// SUPABASE CONFIGURATION
+// =======================================================
+import { createClient } from "@supabase/supabase-js";
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseKey = process.env.SUPABASE_KEY;
+const supabase = createClient(supabaseUrl, supabaseKey);
+
+// =======================================================
+// ROUTE: GET STUDENT REPORT STATUS (FROM SUPABASE)
+// =======================================================
+app.get("/student-status", async (req, res) => {
+  try {
+    // Fetch the first row from 'Student data storing final' table
+    // Assuming the table has a column named 'message' or similar
+    // We select all columns and take the first row
+    const { data, error } = await supabase
+      .from("Student data storing final")
+      .select("*")
+      .limit(1)
+      .single();
+
+    if (error) throw error;
+
+    if (!data) {
+      return res.json({ message: "⚠️ No data found in Supabase." });
+    }
+
+    // Return the entire object or a specific field
+    // Adjust 'message' to the actual column name if needed
+    const statusMessage = data.message || data.status || data.report || JSON.stringify(data);
+    res.json({ message: statusMessage });
+  } catch (error) {
+    console.error("Supabase Error:", error);
+    res.status(500).json({ message: `❌ Error fetching status: ${error.message}` });
+  }
+});
+
+// =======================================================
 // ROUTE: SEND DAILY REPORTS
 // =======================================================
 app.get("/send", async (req, res) => {
@@ -43,7 +81,7 @@ app.get("/send", async (req, res) => {
   try {
     sendLog("📊 Fetching data from Google Sheet...");
     const sheetId = process.env.SHEET_ID;
-    const range = "Sheet1!A2:H";
+    const range = "Daily Report!A2:H";
     const result = await sheets.spreadsheets.values.get({
       spreadsheetId: sheetId,
       range,
